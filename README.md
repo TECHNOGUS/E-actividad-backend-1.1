@@ -1,4 +1,4 @@
-### README.md
+
 
 # Sistema de Gestión de Estudiantes
 
