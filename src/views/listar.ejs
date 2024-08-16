@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Estudiantes</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+<body>
+    <h1>Listado de Estudiantes</h1>
+    <div class="contenedor">
+        <a href="/nuevo" target="_blank">Agregar Nuevo Estudiante</a>
+        <button class="recargar" onclick="location.reload()">
+            <i class="fas fa-sync-alt"></i> Recargar
+        </button>
+    </div>    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Edad</th>
+                <th>Carrera</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% estudiantes.forEach(estudiante => { %>
+                <tr>
+                    <td><%= estudiante.id %></td>
+                    <td><%= estudiante.nombre %></td>
+                    <td><%= estudiante.edad %></td>
+                    <td><%= estudiante.carrera %></td>
+                    <td>
+                        <a href="/ver/<%= estudiante.id %>" target="_blank">Ver</a>
+                        <a href="/<%= estudiante.id %>/editar" target="_blank">Editar</a>
+                        <form action="/<%= estudiante.id %>/eliminar/?_method=DELETE" method="POST" style="display:inline;">
+                            <button type="submit">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>
