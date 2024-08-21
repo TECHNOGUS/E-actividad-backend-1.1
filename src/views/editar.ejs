@@ -17,11 +17,11 @@
 
         <label for="carrera">Carrera:</label>
         <select id="carrera" name="carrera" required>
-            <option value="Ing en Computación" <%= estudiante.carrera === 'Ing en Computación' ? 'selected' : '' %>>Ing en Computación</option>
-            <option value="Ing Industrial" <%= estudiante.carrera === 'Ing Industrial' ? 'selected' : '' %>>Ing Industrial</option>
-            <option value="Contaduría Pública" <%= estudiante.carrera === 'Contaduría Pública' ? 'selected' : '' %>>Contaduría Pública</option>
-            <option value="Administración De Empresas" <%= estudiante.carrera === 'Administración De Empresas' ? 'selected' : '' %>>Administración De Empresas</option>
-            <option value="Derecho" <%= estudiante.carrera === 'Derecho' ? 'selected' : '' %>>Derecho</option>
+            <option value="Ing en Computación" <%= estudiante.carrera.nombre === 'Ing en Computación' ? 'selected' : '' %>>Ing en Computación</option>
+            <option value="Ing Industrial" <%= estudiante.carrera.nombre === 'Ing Industrial' ? 'selected' : '' %>>Ing Industrial</option>
+            <option value="Contaduría Pública" <%= estudiante.carrera.nombre === 'Contaduría Pública' ? 'selected' : '' %>>Contaduría Pública</option>
+            <option value="Administración De Empresas" <%= estudiante.carrera.nombre === 'Administración De Empresas' ? 'selected' : '' %>>Administración De Empresas</option>
+            <option value="Derecho" <%= estudiante.carrera.nombre === 'Derecho' ? 'selected' : '' %>>Derecho</option>
         </select><br><br>
 
         <button type="submit">Actualizar Estudiante</button>

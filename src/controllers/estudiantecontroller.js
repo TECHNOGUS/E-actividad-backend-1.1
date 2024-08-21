@@ -1,71 +1,103 @@
-const modelos = require('../models/estudiantes.js');
+const Estudiante = require('../models/estudiante');
+const Materia = require('../models/materia')
 
 class StudentController {
   // Método para listar todos los estudiantes
-  static listar() {
-    return modelos.listar();
+  static async listar(req, res, next) {
+    try {
+      const estudiantes = await Estudiante.findAll({ include: { model: Materia, as: 'carrera' } });
+    
+      res.render('listar', { estudiantes: estudiantes });
+    } catch (error) {
+      next(error); // Manejo de errores
+    }
   }
 
   // Método para obtener un estudiante por ID
-  static obtener(id) {
-     //Validar id
-     if (!id) return 'Debe ingresar ID';
-     //Buscar indice del estudiante en el arreglo
-     const index = modelos.buscar(id);
-     if (typeof index != 'number') return index;
-     let estudiantes = modelos.listar();
-     return (Array.isArray(estudiantes)) ? estudiantes[index] : estudiantes;
+  static async obtener(req, res, next) {
+    try {
+      const { id } = req.params;
+      if (!id) return res.status(400).send('Debe ingresar ID');
+
+      const estudiante = await Estudiante.findByPk(id, { include: { model: Materia, as: 'carrera' } });
+
+      if (!estudiante) return res.status(404).send('Estudiante no encontrado');
+      res.render('detalle', { estudiante: estudiante });
+    } catch (error) {
+      next(error); // Manejo de errores
+    }
   }
 
   // Método para agregar un nuevo estudiante
-  static agregar(datos) {
-    //Validar datos
-    if (datos.edad) datos.edad = parseInt(datos.edad);
-    let validar = this.validarDatos(datos);
-    if (validar !== true) return validar;
-    return modelos.agregar(datos);
+  static async agregar(req, res, next) {
+    try {
+      const datos = req.body;
+      if (datos.edad) datos.edad = parseInt(datos.edad);
+
+      // Buscar la carrera en la base de datos
+      const materia = await Materia.findOne({ where: { nombre: datos.carrera } });
+
+      if (!materia) return res.status(400).send('Carrera no encontrada');
+
+      // Crear el nuevo estudiante
+      const nuevoEstudiante = await Estudiante.create({
+        nombre: datos.nombre,
+        edad: datos.edad,
+        carreraId: materia.id,
+      });
+
+      res.redirect('/listar');
+    } catch (error) {
+      next(error); // Manejo de errores
+    }
   }
 
   // Método para actualizar un estudiante por ID
-  static actualizar(id, datos) {
-    //Validar datos
-    if (datos.edad) datos.edad = parseInt(datos.edad);
-    let validar = this.validarDatos(datos);
-    if (validar !== true) return validar;
-    if (!id) return 'Debe ingresar ID';
-    //Buscar indice del estudiante en el arreglo
-    const index = modelos.buscar(id);
-    if (typeof index != 'number') return index;
-    return modelos.actualizar(index, id, datos);
+  static async actualizar(req, res, next) {
+    try {
+      const { id } = req.params;
+      const datos = req.body;
+
+      if (datos.edad) datos.edad = parseInt(datos.edad);
+
+      if (!id) return res.status(400).send('Debe ingresar ID');
+
+      const estudiante = await Estudiante.findByPk(id);
+
+      if (!estudiante) return res.status(404).send('Estudiante no encontrado');
+
+      // Si la carrera cambia, buscamos la nueva carrera
+      if (datos.carrera) {
+        const materia = await Materia.findOne({ where: { nombre: datos.carrera } });
+        if (!materia) return res.status(400).send('Carrera no encontrada');
+        datos.carreraId = materia.id;
+      }
+
+      // Actualizamos el estudiante
+      await estudiante.update(datos);
+      res.redirect('/listar');
+    } catch (error) {
+      next(error); // Manejo de errores
+    }
   }
 
   // Método para eliminar un estudiante por ID
-  static eliminar(id) {
-    if (!id) return 'Debe ingresar ID';
-    const index = modelos.buscar(id);
-    if (typeof index != 'number') return index;
-    return modelos.eliminar(index);
-  }
+  static async eliminar(req, res, next) {
+    try {
+      const { id } = req.params;
 
-  //Método para validar los datos del estudiante
-  static validarDatos(datos) {
-    let errores = [];
+      if (!id) return res.status(400).send('Debe ingresar ID');
 
-    if (!datos.nombre || typeof datos.nombre !== 'string') {
-      errores.push('Nombre es requerido y debe ser una cadena de texto.');
+      const estudiante = await Estudiante.findByPk(id);
+
+      if (!estudiante) return res.status(404).send('Estudiante no encontrado');
+
+      await estudiante.destroy();
+      res.redirect('/listar');
+    } catch (error) {
+      next(error); // Manejo de errores
     }
-
-    if (!Number.isInteger(datos.edad) || datos.edad <= 0) {
-      errores.push('Edad debe ser un número entero positivo.');
-    }
-
-    if (!modelos.carrerasValidas(datos.carrera)) {
-      errores.push('Carrera no válida.');
-    }
-
-    return (errores.length > 0) ? errores : true;
-  }
+  }  
 }
 
-// Exportar una instancia del controlador
 module.exports = StudentController;
