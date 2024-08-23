@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .logout-btn {
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Mi Aplicación</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/dashboard">Dashboard</a>
+                    </li>
+                    <% if (role === 'Admin') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/estudiantes/listar">Estudiantes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/materias/listar">Materias</a>
+                    </li>
+                    <% } else if (role === 'Editor') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/estudiantes/listar">Ver Estudiantes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/materias/listar">Ver Materias</a>
+                    </li>
+                    <% } %>
+                </ul>
+                <button class="btn btn-outline-danger logout-btn" onclick="handleLogout()">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1 class="text-center">Bienvenido al Dashboard</h1>
+        <p class="text-center">Selecciona una sección para administrar:</p>
+
+        <div class="row">
+            <% if (role === 'Admin') { %>
+            <!-- Sección de Estudiantes -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Estudiantes</h5>
+                        <p class="card-text">Gestiona la lista de estudiantes, agrega, edita o elimina registros.</p>
+                        <a href="/estudiantes/listar" class="btn btn-primary">Ir a Estudiantes</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de Materias -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Materias</h5>
+                        <p class="card-text">Gestiona la lista de materias disponibles en el sistema.</p>
+                        <a href="/materias/listar" class="btn btn-primary">Ir a Materias</a>
+                    </div>
+                </div>
+            </div>
+            <% } else if (role === 'Editor') { %>
+            <!-- Sección de Estudiantes y Materias para el Editor -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Estudiantes</h5>
+                        <p class="card-text">Ver la lista de estudiantes registrados.</p>
+                        <a href="/estudiantes/listar" class="btn btn-primary">Ver Estudiantes</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Materias</h5>
+                        <p class="card-text">Ver las materias disponibles en el sistema.</p>
+                        <a href="/materias/listar" class="btn btn-primary">Ver Materias</a>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        function handleLogout() {
+            fetch('/logout', {
+                method: 'POST',
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Logout exitoso');
+                    window.location.href = '/login'; // Redirige al usuario a la página de login
+                } else {
+                    alert('Error al cerrar sesión');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

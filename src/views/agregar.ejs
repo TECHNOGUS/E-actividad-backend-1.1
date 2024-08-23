@@ -17,15 +17,13 @@
 
         <label for="carrera">Carrera:</label>
         <select id="carrera" name="carrera" required>
-            <option value="Ing en Computación">Ing en Computación</option>
-            <option value="Ing Industrial">Ing Industrial</option>
-            <option value="Contaduría Pública">Contaduría Pública</option>
-            <option value="Administración De Empresas">Administración De Empresas</option>
-            <option value="Derecho">Derecho</option>
+            <% materias.forEach(materia => { %>
+            <option value="<%= materia.nombre %>"><%= materia.nombre %></option>         
+            <% }) %>
         </select><br><br>
 
         <button type="submit">Agregar Estudiante</button>
     </form>
-    <a href="/listar">Volver al Listado</a>
+    <a href="/estudiantes/listar">Volver al Listado</a>
 </body>
 </html>

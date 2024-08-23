@@ -46,7 +46,7 @@ class StudentController {
         carreraId: materia.id,
       });
 
-      res.redirect('/listar');
+      res.redirect('/estudiantes/listar');
     } catch (error) {
       next(error); // Manejo de errores
     }
@@ -75,7 +75,7 @@ class StudentController {
 
       // Actualizamos el estudiante
       await estudiante.update(datos);
-      res.redirect('/listar');
+      res.redirect('/estudiantes/listar');
     } catch (error) {
       next(error); // Manejo de errores
     }
@@ -93,7 +93,7 @@ class StudentController {
       if (!estudiante) return res.status(404).send('Estudiante no encontrado');
 
       await estudiante.destroy();
-      res.redirect('/listar');
+      res.redirect('/estudiantes/listar');
     } catch (error) {
       next(error); // Manejo de errores
     }

@@ -1,48 +1,54 @@
-// Importar módulos necesarios
+// index.js
 const express = require('express');
-require('dotenv').config()
+require('dotenv').config();
 const path = require('path');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const cookieParser = require('cookie-parser');
+const { authenticateJWT } = require('./src/middlewares/authMiddleware');
 
-//Importar conexion a la DB.
+
 require('./src/config/db_config.js');
 
-// Importar las rutas
-const studentRoutes = require('./src/routes/estudiantesroutes.js');
-const studentViews = require('./src/routes/index.js');
+const authRoutes = require('./src/routes/auth'); // Rutas de autenticación
+const studentRoutes = require('./src/routes/estudiantesroutes'); // Rutas de estudiantes
+const dashboardRoutes = require('./src/routes/dashboard');
+const materiasRoutes = require('./src/routes/materiasRoutes');
 
-const app = express(); // Crear una instancia de la aplicación Express
-const PORT = process.env.PORT || 3000; // Configurar el puerto del servidor
 
-// Configuración del motor de plantillas
+
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
 app.set('views', path.join(__dirname, 'src/views'));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
-
-// Servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
-
-
-// Middleware para procesar datos en formato JSON y URL-encoded
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
-// Rutas principales
-app.use('/', studentViews);
+// Rutas
+app.use('/', authRoutes); // la ruta raíz
+
+
+app.use('/dashboard', authenticateJWT, dashboardRoutes);
+
+
+// Redirigir la raíz al formulario de login si no está autenticado
+app.get('/', (req, res) => {
+  res.redirect('/login'); // Redirige a la página de login
+});
+
+// Rutas de estudiantes, protegidas por autenticación
 app.use('/estudiantes', studentRoutes);
 
-// Redirigir la raíz al listado de estudiantes
-app.get('/', (req, res) => {
-  res.redirect('/listar');
-});
+app.use('/', dashboardRoutes);  // Agregar la ruta para el dashboard
+app.use('/materias', materiasRoutes);  // Integrar las rutas de materias
 
-// Manejo de errores para rutas no encontradas
-app.use((req, res) => {
-  res.status(404).send('Página no encontrada');
-});
 
-// Iniciar el servidor
+
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
