@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de Materia</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        .detalle {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .detalle p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .detalle p strong {
+            color: #333;
+        }
+
+        .acciones {
+            margin-top: 20px;
+        }
+
+        .acciones a,
+        .acciones button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .acciones a.volver {
+            background-color: #008CBA;
+        }
+
+        .acciones button.eliminar {
+            background-color: #f44336;
+        }
+
+        .acciones a:hover,
+        .acciones button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Detalle del Profesor</h1>
+    <div class="detalle">
+        <p><strong>ID:</strong> <%= profesor.id %></p>
+        <p><strong>Nombre:</strong> <%= profesor.nombre %></p>
+    </div>
+    <div class="acciones">
+        <a href="/profesores/listar" class="volver">Volver al Listado</a>
+    </div>
+</body>
+
+</html>

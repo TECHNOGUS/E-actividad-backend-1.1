@@ -12,6 +12,7 @@
 
         .card {
             transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 1rem;
         }
 
         .card:hover {
@@ -60,11 +61,26 @@
                         <a class="nav-link active" aria-current="page" href="/dashboard">Dashboard</a>
                     </li>
                     <% if (role === 'Admin') { %>
-                    <li class="nav-item">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/profesores/listar">Profesores</a>
+                            </li>
+                            <li class="nav-item">
                         <a class="nav-link" href="/estudiantes/listar">Estudiantes</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/materias/listar">Materias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cursos/listar">Ver Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/inscripciones/listar">Ver Inscripciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/calificaciones/listar">Ver Calificaciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/semestres/listar">Ver Semestres</a>
                     </li>
                     <% } else if (role === 'Editor') { %>
                     <li class="nav-item">
@@ -72,6 +88,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/materias/listar">Ver Materias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cursos/listar">Ver Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/semestres/listar">Ver Semestres</a>
                     </li>
                     <% } %>
                 </ul>
@@ -86,7 +108,15 @@
 
         <div class="row">
             <% if (role === 'Admin') { %>
-            <!-- Sección de Estudiantes -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Profesores</h5>
+                            <p class="card-text">Gestiona la lista de profesores, agrega, edita o elimina registros.</p>
+                            <a href="/profesores/listar" class="btn btn-primary">Ir a Profesores</a>
+                        </div>
+                    </div>
+                </div>
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
@@ -96,14 +126,48 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Sección de Materias -->
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Materias</h5>
                         <p class="card-text">Gestiona la lista de materias disponibles en el sistema.</p>
                         <a href="/materias/listar" class="btn btn-primary">Ir a Materias</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Cursos</h5>
+                        <p class="card-text">Gestiona la lista de cursos disponibles en el sistema.</p>
+                        <a href="/cursos/listar" class="btn btn-primary">Ir a cursos</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Inscripciones</h5>
+                        <p class="card-text">Gestiona la lista de inscripciones disponibles en el sistema.</p>
+                        <a href="/inscripciones/listar" class="btn btn-primary">Ir a Inscripciones</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Calificaciones</h5>
+                        <p class="card-text">Gestiona la lista de calificaciones disponibles en el sistema.</p>
+                        <a href="/calificaciones/listar" class="btn btn-primary">Ir a Calificaciones</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Semestres</h5>
+                        <p class="card-text">Gestiona la lista de semestres disponibles en el sistema.</p>
+                        <a href="/semestres/listar" class="btn btn-primary">Ir a Semestres</a>
                     </div>
                 </div>
             </div>
@@ -125,6 +189,24 @@
                         <h5 class="card-title">Materias</h5>
                         <p class="card-text">Ver las materias disponibles en el sistema.</p>
                         <a href="/materias/listar" class="btn btn-primary">Ver Materias</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Cursos</h5>
+                        <p class="card-text">Gestiona la lista de cursos disponibles en el sistema.</p>
+                        <a href="/cursos/listar" class="btn btn-primary">Ir a cursos</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Semestres</h5>
+                        <p class="card-text">Gestiona la lista de semestres disponibles en el sistema.</p>
+                        <a href="/semestres/listar" class="btn btn-primary">Ir a Semestres</a>
                     </div>
                 </div>
             </div>

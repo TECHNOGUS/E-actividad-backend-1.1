@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Calificacion</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+
+<body>
+    <h1>Editar Calificacion</h1>
+    <form action="/calificaciones/<%= calificacion.id %>?_method=PUT" method="POST">
+        <label for="nombre">Calificacion:</label>
+        <input type="number" id="calificacion" name="calificacion" value="<%= calificacion.calificacion %>"
+            required><br><br>
+
+        <select id="cursoId" name="cursoId" required>
+            <option value="<%= calificacion.cursoId %>">Curso Actual: <%= calificacion.curso.nombre %></option>
+            <% cursos.forEach(curso => { %>
+            <option value="<%= curso.id %>"><%= curso.nombre %></option>
+            <% }) %>
+        </select><br><br>
+
+        <button type="submit">Actualizar Calificacion</button>
+    </form>
+    <a href="/calificaciones/listar">Volver al Listado</a>
+</body>
+
+</html>

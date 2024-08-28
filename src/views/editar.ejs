@@ -17,6 +17,7 @@
 
         <label for="carrera">Carrera:</label>
         <select id="carrera" name="carrera" required>
+            <option value="<%= estudiante.carrera.nombre %>">Materia Actual: <%= estudiante.carrera.nombre %></option>
             <% materias.forEach(materia => { %>
                 <option value="<%= materia.nombre %>"><%= materia.nombre %></option>         
             <% }) %>           

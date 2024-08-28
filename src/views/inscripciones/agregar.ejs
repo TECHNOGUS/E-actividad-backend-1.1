@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Registro</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+
+<body>
+    <h1>Nuevo Registro</h1>
+    <form action="/inscripciones/nuevo" method="POST">
+        <label for="nombre">Nombre Curso</label>
+        <select id="estudianteId" name="estudianteId" required>
+            <% estudiantes.forEach(estudiante => { %>
+            <option value="<%= estudiante.id %>"><%= estudiante.nombre %></option>
+            <% }) %>
+        </select><br><br>
+        <select id="cursoId" name="cursoId" required>
+            <% cursos.forEach(curso => { %>
+            <option value="<%= curso.id %>"><%= curso.nombre %></option>
+            <% }) %>
+        </select><br><br>
+
+        <button type="submit">Registrar</button>
+    </form>
+    <a href="/inscripciones/listar">Volver al Listado</a>
+</body>
+
+</html>

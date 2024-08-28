@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Calificacion</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+
+<body>
+    <h1>Editar Inscripcion</h1>
+    <form action="/inscripciones/<%= inscripcion.id %>?_method=PUT" method="POST">
+        <label for="nombre">Alumno</label>
+        <span><%= inscripcion.estudiante.nombre %></span><br><br>
+        <label for="nombre">Seleccione Curso</label>
+        <select id="cursoId" name="cursoId" required>
+            <option value="<%= inscripcion.cursoId %>">Curso Actual: <%= inscripcion.curso.nombre %></option>
+            <% cursos.forEach(curso => { %>
+            <option value="<%= curso.id %>"><%= curso.nombre %></option>
+            <% }) %>
+        </select><br><br>
+
+        <button type="submit">Actualizar Inscripcion</button>
+    </form>
+    <a href="/inscripciones/listar">Volver al Listado</a>
+</body>
+
+</html>

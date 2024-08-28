@@ -27,7 +27,10 @@ DB_NAME=actividad1
 4. Ejecutar las migraciones de base de datos
 Para aplicar las migraciones y crear las tablas necesarias en la base de datos, ejecuta el siguiente comando:
 
-npx sequelize-cli db:migrate
+Pimera opcionn: npx sequelize-cli db:migrate
+Segunda opcion: Importar el archivo sql 'backup_base_de_datos.sql' en la interfaz de PHPMyAdmin.
+
+La actividad cumple con las 8 entidades solicitadas.
 
 5. Inica el servidor 
 Ejecuta el siguiente comando para iniciar el servidor:
